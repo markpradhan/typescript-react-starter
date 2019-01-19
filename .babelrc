@@ -1,0 +1,59 @@
+{
+  "env": {
+    "development": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": false,
+            "useBuiltIns": "entry",
+            "targets": {
+              "browsers": ["last 3 versions", "> 5%"]
+            }
+          }
+        ],
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+      ],
+      "plugins": [
+        "lodash",
+        "babel-plugin-inline-import",
+        "react-hot-loader/babel",
+        ["babel-plugin-styled-components"]
+      ]
+    },
+    "production": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": false,
+            "useBuiltIns": "entry",
+            "targets": {
+              "browsers": ["last 3 versions", "not ie"]
+            }
+          }
+        ],
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+      ],
+      "plugins": ["lodash", "babel-plugin-inline-import"]
+    },
+    "test": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "useBuiltIns": "entry",
+            "targets": {
+              "browsers": ["last 3 versions", "not ie"]
+            }
+          }
+        ],
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+      ],
+      "plugins": ["lodash", "babel-plugin-inline-import"]
+    }
+  }
+}
