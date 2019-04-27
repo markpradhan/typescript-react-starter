@@ -1,7 +1,6 @@
-// Lib Imports
 import { combineReducers } from 'redux'
-
-// Reducers
+import { connectRouter } from 'connected-react-router'
 import test from './test'
 
-export default combineReducers({ test })
+export const reducer = history =>
+  combineReducers({ router: connectRouter(history), test })

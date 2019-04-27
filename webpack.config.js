@@ -34,6 +34,9 @@ export default {
     extensions: ['.js', '.ts', '.tsx', '.jsx', '.json'],
     mainFields: ['main'],
     modules: [path.resolve('./src'), path.resolve('./node_modules')],
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
   },
   module: {
     rules: [

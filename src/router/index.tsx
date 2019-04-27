@@ -15,4 +15,4 @@ const AppRouter = () => (
   </Switch>
 )
 
-export default hot(module)(AppRouter)
+export const Router = hot(module)(AppRouter)

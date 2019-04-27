@@ -10,11 +10,7 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 
 // Router
-import {
-  connectRouter,
-  routerMiddleware,
-  ConnectedRouter,
-} from 'connected-react-router'
+import { routerMiddleware, ConnectedRouter } from 'connected-react-router'
 
 // Utils
 import { get } from 'lodash'
@@ -26,16 +22,13 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import NormalizeStyles from './styles/normalize'
 import GlobalStyles from './styles/globals'
 
-// Styled components
-import { css } from 'styled-components'
-
 // Router
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 
 // ----------------------------------------------------------------------------
 // App files
-import reducer from './reducer'
-import Router from './router'
+import { reducer } from './reducer'
+import { Router } from './router'
 import theme from './styles'
 
 // ----------------------------------------------------------------------------
@@ -46,7 +39,7 @@ const hotReducer = replaceReducer => replaceReducer('./reducer', reducer)
 // Bootstrap
 
 // Create history
-const history = createHistory()
+const history = createBrowserHistory()
 
 // Global styles
 const Styles = createGlobalStyle`
@@ -66,20 +59,23 @@ const composeEnhancers =
   (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 // Redux Store for application
-const store = createStore(
-  connectRouter(history)(reducer),
-  composeEnhancers(middleware),
-)
+const configureStore = () => {
+  const store = createStore(reducer(history), composeEnhancers(middleware))
 
-const replaceReducer = (location, reducer) => {
-  module.hot.accept(location, () => {
-    store.replaceReducer(connectRouter(history)(reducer))
-  })
+  const replaceReducer = (location, reducer) => {
+    module.hot.accept(location, () => {
+      store.replaceReducer(reducer(history))
+    })
+  }
+
+  if (module.hot) {
+    hotReducer(replaceReducer)
+  }
+
+  return store
 }
 
-if (module.hot) {
-  hotReducer(replaceReducer)
-}
+const store = configureStore()
 
 const App = () => (
   <Provider store={store}>
@@ -87,7 +83,7 @@ const App = () => (
       <ThemeProvider theme={theme}>
         <Fragment>
           <Styles />
-          <Router />
+          <Router key="router" />
         </Fragment>
       </ThemeProvider>
     </ConnectedRouter>
@@ -95,5 +91,3 @@ const App = () => (
 )
 
 ReactDOM.render(<App />, document.getElementById('app'))
-
-// ----------------------------------------------------------------------------

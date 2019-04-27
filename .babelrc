@@ -7,6 +7,7 @@
           {
             "modules": false,
             "useBuiltIns": "entry",
+            "corejs": "3.0.0",
             "targets": {
               "browsers": ["last 3 versions", "> 5%"]
             }
@@ -29,6 +30,7 @@
           {
             "modules": false,
             "useBuiltIns": "entry",
+            "corejs": "3.0.0",
             "targets": {
               "browsers": ["last 3 versions", "not ie"]
             }
@@ -45,6 +47,7 @@
           "@babel/preset-env",
           {
             "useBuiltIns": "entry",
+            "corejs": "3.0.0",
             "targets": {
               "browsers": ["last 3 versions", "not ie"]
             }
